@@ -17,6 +17,11 @@ bot.start(ctx => ctx.reply("Если хотите обновить ссылку 
 
 bot.command("updateLink", ctx => ctx.scene.enter("updateLinkScene"))
 
+bot.command("getId", ctx => {
+    ctx.reply(ctx.chat.id.toString())
+    console.log(ctx.from.username)
+})
+
 setInterval(async() => {
     var url = getLink()
     if(url == "") return
