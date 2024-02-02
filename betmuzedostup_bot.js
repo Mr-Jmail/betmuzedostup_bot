@@ -31,8 +31,4 @@ async function sendRequest(url) {
     return response.status
 }
 
-;(async function() {
-    console.log(await sendRequest("https://www.betmuze3.com/"))
-})()
-
 bot.launch()
