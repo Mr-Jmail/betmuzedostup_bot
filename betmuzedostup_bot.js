@@ -2,7 +2,7 @@ const path = require("path")
 require("dotenv").config({path: path.join(__dirname, ".env")})
 const { Telegraf, Scenes, session } = require("telegraf")
 const bot = new Telegraf(process.env.botToken)
-const chatIdToSendMessage = 54665627
+const chatIdToSendMessage = -4096151300
 const fetch = require("node-fetch")
 
 const updateLinkScene = require("./updateLinkScene")
