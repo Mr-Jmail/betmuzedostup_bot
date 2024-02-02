@@ -13,9 +13,9 @@ const stage = new Scenes.Stage([updateLinkScene])
 bot.use(session())
 bot.use(stage.middleware())
 
-bot.start(ctx => ctx.reply("To update link use /updateLink").catch(err => console.log(err)))
+bot.start(ctx => ctx.reply("To see what link is checking now use /getLink\nTo update link use /updateLink").catch(err => console.log(err)))
 
-bot.command("getLink", ctx => ctx.reply(getLink()).catch(err => console.log(err)))
+bot.command("getLink", ctx => ctx.reply(`Actual link is: "${getLink()}"`).catch(err => console.log(err)))
 
 bot.command("updateLink", ctx => ctx.scene.enter("updateLinkScene"))
 
