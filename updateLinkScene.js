@@ -13,7 +13,7 @@ module.exports = new Scenes.WizardScene("updateLinkScene",
         var link = new URL(ctx.message.text)
         link.pathname = "tr"
         updateLink(link.href)
-        ctx.reply(`Succesfuly updated. The new link is "${link}"`).catch(err => console.log(err))
+        ctx.reply(`✅Succesfuly updated. The new link is "${link}"`).catch(err => console.log(err))
         ctx.scene.leave()
     }
 )

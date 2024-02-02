@@ -30,8 +30,8 @@ setInterval(async() => {
     var status = await sendRequest(url)
     if(status == 200) return
     updateLink("")
-    bot.telegram.sendMessage(chatIdToSendMessage, `Site "${url}" was blocked. To update the link use /updateLink`).catch(err => console.log(err))
-}, 1000 * 60 * 5);
+    bot.telegram.sendMessage(chatIdToSendMessage, `⛔️Site "${url}" was blocked. To update the link use /updateLink`).catch(err => console.log(err))
+}, 1000 * 60 * 1);
 
 async function sendRequest(url) {
     var response = await fetch(url, {method: "get"})
