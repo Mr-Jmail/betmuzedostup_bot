@@ -15,6 +15,8 @@ bot.use(stage.middleware())
 
 bot.start(ctx => ctx.reply("To update link use /updateLink"))
 
+bot.command("getLink", ctx => ctx.reply(getLink()))
+
 bot.command("updateLink", ctx => ctx.scene.enter("updateLinkScene"))
 
 bot.command("getId", ctx => {
