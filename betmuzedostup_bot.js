@@ -13,14 +13,14 @@ const stage = new Scenes.Stage([updateLinkScene])
 bot.use(session())
 bot.use(stage.middleware())
 
-bot.start(ctx => ctx.reply("To update link use /updateLink"))
+bot.start(ctx => ctx.reply("To update link use /updateLink").catch(err => console.log(err)))
 
-bot.command("getLink", ctx => ctx.reply(getLink()))
+bot.command("getLink", ctx => ctx.reply(getLink()).catch(err => console.log(err)))
 
 bot.command("updateLink", ctx => ctx.scene.enter("updateLinkScene"))
 
 bot.command("getId", ctx => {
-    ctx.reply(ctx.chat.id.toString())
+    ctx.reply(ctx.chat.id.toString()).catch(err => console.log(err))
     console.log(ctx.from.username)
 })
 
@@ -30,7 +30,7 @@ setInterval(async() => {
     var status = await sendRequest(url)
     if(status == 200) return
     updateLink("")
-    bot.telegram.sendMessage(chatIdToSendMessage, `Site "${url}" was blocked. To update the link use /updateLink`)
+    bot.telegram.sendMessage(chatIdToSendMessage, `Site "${url}" was blocked. To update the link use /updateLink`).catch(err => console.log(err))
 }, 1000 * 60 * 5);
 
 async function sendRequest(url) {
