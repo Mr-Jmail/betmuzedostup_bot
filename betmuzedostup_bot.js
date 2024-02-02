@@ -2,7 +2,7 @@ const path = require("path")
 require("dotenv").config({path: path.join(__dirname, ".env")})
 const { Telegraf, Scenes, session } = require("telegraf")
 const bot = new Telegraf(process.env.botToken)
-const chatIdToSendMessage = 1386450473
+const chatIdToSendMessage = 54665627
 const fetch = require("node-fetch")
 
 const updateLinkScene = require("./updateLinkScene")
@@ -13,7 +13,7 @@ const stage = new Scenes.Stage([updateLinkScene])
 bot.use(session())
 bot.use(stage.middleware())
 
-bot.start(ctx => ctx.reply("Если хотите обновить ссылку используйте команду /updateLink"))
+bot.start(ctx => ctx.reply("To update link use /updateLink"))
 
 bot.command("updateLink", ctx => ctx.scene.enter("updateLinkScene"))
 
@@ -28,7 +28,7 @@ setInterval(async() => {
     var status = await sendRequest(url)
     if(status == 200) return
     updateLink("")
-    bot.telegram.sendMessage(chatIdToSendMessage, `Сайт "${url}" заблокирован. Чтобы обновить ссылку используйте команду /updateLink`)
+    bot.telegram.sendMessage(chatIdToSendMessage, `Site "${url}" was blocked. To update the link use /updateLink`)
 }, 1000 * 60 * 5);
 
 async function sendRequest(url) {

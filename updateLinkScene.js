@@ -4,16 +4,16 @@ const { URL } = require("url")
 
 module.exports = new Scenes.WizardScene("updateLinkScene", 
     ctx => {
-        ctx.reply("Введите новую ссылку")
+        ctx.reply("Please send new link")
         return ctx.wizard.next()
     },
     ctx => {
-        if(!ctx?.message?.text) return ctx.reply("Отправьте ответ текстом")
-        if(!isValidUrl(ctx.message.text)) return ctx.reply("Ссылка не действительна, отправьте ссылку в формате https://example.com")
+        if(!ctx?.message?.text) return ctx.reply("Please use text to answer")
+        if(!isValidUrl(ctx.message.text)) return ctx.reply("Invalid link, the correct format is https://example.com")
         var link = new URL(ctx.message.text)
         link.pathname = "tr"
         updateLink(link)
-        ctx.reply(`Ссылка успешно обновлена на "${link}"`)
+        ctx.reply(`Succesfuly updated. The new link is "${link}"`)
     }
 )
 
