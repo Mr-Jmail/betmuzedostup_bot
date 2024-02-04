@@ -4,6 +4,7 @@ const { Telegraf, Scenes, session } = require("telegraf")
 const bot = new Telegraf(process.env.botToken)
 const chatIdToSendMessage = -4096151300
 const fetch = require("node-fetch")
+const fs = require("fs")
 
 const updateLinkScene = require("./updateLinkScene")
 const { getLink, updateLink } = require("./functions")
@@ -27,15 +28,16 @@ bot.command("getId", ctx => {
 setInterval(async() => {
     var url = getLink()
     if(url == "") return
-    var status = await sendRequest(url)
-    if(status == 200) return
+    var response = await sendRequest(url)
+    if(response.status == 200) return
+    fs.writeFileSync(path.join(__dirname, "index.html"), JSON.stringify(response.text(), null, 4), "utf-8")
     updateLink("")
     bot.telegram.sendMessage(chatIdToSendMessage, `⛔️Site "${url}" was blocked. To update the link use /updateLink`).catch(err => console.log(err))
 }, 1000 * 60 * 1);
 
 async function sendRequest(url) {
     var response = await fetch(url, {method: "get"})
-    return response.status
+    return response
 }
 
 bot.launch()
