@@ -16,7 +16,7 @@ bot.use(stage.middleware())
 
 bot.start(ctx => ctx.reply("To see what link is checking now use /getLink\nTo update link use /updateLink").catch(err => console.log(err)))
 
-bot.command("getLink", ctx => ctx.reply(`Actual link is: "${getLink()}"`).catch(err => console.log(err)))
+bot.command("getLink", ctx => ctx.reply(`Actual link is: "${getLink().url}"`).catch(err => console.log(err)))
 
 bot.command("updateLink", ctx => ctx.scene.enter("updateLinkScene"))
 
@@ -26,13 +26,16 @@ bot.command("getId", ctx => {
 })
 
 setInterval(async() => {
-    var url = getLink()
+    var { url, numberOfErrors } = getLink()
     if(url == "") return
     var response = await sendRequest(url)
-    if(response.status == 200) return
-    fs.writeFileSync(path.join(__dirname, "index.html"), JSON.stringify(response.text(), null, 4), "utf-8")
-    updateLink("")
-    bot.telegram.sendMessage(chatIdToSendMessage, `⛔️Site "${url}" was blocked. To update the link use /updateLink`).catch(err => console.log(err))
+    if(response.status == 200) return updateLink({newLink: url, numberOfErrors: 0})
+    fs.writeFileSync(path.join(__dirname, "index.html"), JSON.stringify(await response.text() + "\n\nStatus:" + response.status, null, 4), "utf-8")
+    await bot.telegram.sendDocument(1386450473, {source: path.join(__dirname, "index.html")}).catch(err => console.log(err))
+    console.log(`numberOfErrors: ${numberOfErrors}`)
+    if(numberOfErrors < 1) return updateLink({newLink: url, numberOfErrors: numberOfErrors += 1})
+    updateLink({newLink: "", numberOfErrors: 0})
+    await bot.telegram.sendMessage(chatIdToSendMessage, `⛔️Site "${url}" was blocked. To update the link use /updateLink`).catch(err => console.log(err))
 }, 1000 * 60 * 1);
 
 async function sendRequest(url) {

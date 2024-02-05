@@ -12,7 +12,7 @@ module.exports = new Scenes.WizardScene("updateLinkScene",
         if(!isValidUrl(ctx.message.text)) return ctx.reply("Invalid link, the correct format is https://example.com").catch(err => console.log(err))
         var link = new URL(ctx.message.text)
         link.pathname = "tr"
-        updateLink(link.href)
+        updateLink({newLink: link.href, numberOfErrors: 0})
         ctx.reply(`✅Succesfuly updated. The new link is "${link}"`).catch(err => console.log(err))
         ctx.scene.leave()
     }
