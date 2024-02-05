@@ -29,7 +29,7 @@ bot.command("sendRequest", async ctx => {
     var response = await fetch("https://www.betmuze5.com/tr")
     console.log(response.status)
     console.log(response)
-    fs.writeFileSync(path.join(__dirname, "index.html"), JSON.stringify(await response.text()), "utf-8")
+    fs.writeFileSync(path.join(__dirname, "index.html"), await response.text(), "utf-8")
     await ctx.replyWithDocument({source: path.join(__dirname, "index.html")})
 })
 
