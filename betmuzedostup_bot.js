@@ -25,6 +25,14 @@ bot.command("getId", ctx => {
     console.log(ctx.from.username)
 })
 
+bot.command("sendRequest", async ctx => {
+    var response = await fetch("https://www.betmuze5.com/tr")
+    console.log(response.status)
+    console.log(response)
+    fs.writeFileSync(path.join(__dirname, "index.html"), JSON.stringify(await response.text()), "utf-8")
+    await ctx.replyWithDocument({source: path.join(__dirname, "index.html")})
+})
+
 setInterval(async() => {
     var { url, numberOfErrors } = getLink()
     if(url == "") return
@@ -42,5 +50,7 @@ async function sendRequest(url) {
     var response = await fetch(url, {method: "get"})
     return response
 }
+
+
 
 bot.launch()
