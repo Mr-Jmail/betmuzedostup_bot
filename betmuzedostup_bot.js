@@ -16,11 +16,11 @@ bot.use(stage.middleware())
 
 bot.start(ctx => ctx.reply("To see what link is checking now use /getLink\nTo update link use /updateLink").catch(err => console.log(err)))
 
-bot.command("getLink", ctx => ctx.reply(`Actual link is: "${getLink()}"`).catch(err => console.log(err)))
+bot.command("get_link", ctx => ctx.reply(`Actual link is: "${getLink()}"`).catch(err => console.log(err)))
 
-bot.command("updateLink", ctx => ctx.scene.enter("updateLinkScene"))
+bot.command("update_link", ctx => ctx.scene.enter("updateLinkScene"))
 
-bot.command("getId", ctx => ctx.reply(ctx.chat.id.toString()).catch(err => console.log(err)))
+bot.command("get_id", ctx => ctx.reply(ctx.chat.id.toString()).catch(err => console.log(err)))
 
 setInterval(async() => {
     const url = getLink()
