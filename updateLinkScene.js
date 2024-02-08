@@ -1,6 +1,5 @@
 const { Scenes } = require("telegraf");
 const { updateLink } = require("./functions");
-const { URL } = require("url")
 
 module.exports = new Scenes.WizardScene("updateLinkScene", 
     ctx => {
@@ -10,10 +9,8 @@ module.exports = new Scenes.WizardScene("updateLinkScene",
     ctx => {
         if(!ctx?.message?.text) return ctx.reply("Please use text to answer").catch(err => console.log(err))
         if(!isValidUrl(ctx.message.text)) return ctx.reply("Invalid link, the correct format is https://example.com").catch(err => console.log(err))
-        var link = new URL(ctx.message.text)
-        link.pathname = "tr"
-        updateLink({newLink: link.href, numberOfErrors: 0})
-        ctx.reply(`✅Succesfuly updated. The new link is "${link}"`).catch(err => console.log(err))
+        updateLink(ctx.message.text)
+        ctx.reply(`✅Succesfuly updated. The new link is "${ctx.message.text}"`).catch(err => console.log(err))
         ctx.scene.leave()
     }
 )
