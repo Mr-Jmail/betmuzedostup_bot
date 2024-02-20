@@ -25,7 +25,7 @@ bot.command("get_id", ctx => ctx.reply(ctx.chat.id.toString()).catch(err => cons
 setInterval(async() => {
     const url = getLink()
     if(url == "") return
-    if(!await siteIsBlocked(url)) return
+    if(!await siteIsBlocked(url).catch(err => console.log(err))) return
     await bot.telegram.sendMessage(chatIdToSendMessage, `⛔️Site "${url}" was blocked. To update the link use /updateLink`).catch(err => console.log(err))
     updateLink("")
 }, 1000 * 60 * 5);

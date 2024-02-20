@@ -50,7 +50,7 @@ async function solveCaptcha(imageBase64) {
 }
 
 module.exports = async function siteIsBlocked(url) {
-    const browser = await chromium.launch({headless: true, timeout: 40000});
+    const browser = await chromium.launch({headless: true, timeout: 60000});
     const context = await browser.newContext();
     const page = await context.newPage();
     
